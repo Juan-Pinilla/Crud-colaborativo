@@ -16,12 +16,12 @@ This project aims to create a small CRUD (Create, Read, Update, Delete) applicat
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/contracts-and-users-crud.git
+   git clone https://github.com/Juan-Pinilla/Crud-colaborativo.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd contracts-and-users-crud
+   cd Crud-colaborativo
    ```
 
 3. Install dependencies:
