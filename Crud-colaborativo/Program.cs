@@ -1,7 +1,10 @@
-using Crud_colaborativo.Data;
+﻿using Crud_colaborativo.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<Crud_colaborativoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Crud_colaborativoContext") ?? throw new InvalidOperationException("Connection string 'Crud_colaborativoContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
