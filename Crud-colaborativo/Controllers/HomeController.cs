@@ -1,9 +1,11 @@
 using Crud_colaborativo.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Crud_colaborativo.Controllers
 {
+	
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
@@ -13,12 +15,13 @@ namespace Crud_colaborativo.Controllers
 			_logger = logger;
 		}
 
+		//[Authorize(Roles = "Admin, User")]
 		public IActionResult Index()
 		{
 			return View();
 		}
-
-		public IActionResult Privacy()
+        [Authorize(Roles = "Admin")]
+        public IActionResult Privacy()
 		{
 			return View();
 		}
