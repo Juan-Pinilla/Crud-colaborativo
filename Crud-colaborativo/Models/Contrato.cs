@@ -13,7 +13,7 @@ namespace Crud_colaborativo.Models
     {
         [Key]
         [Required(ErrorMessage = "El campo IdContrato es requerido.")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string? TipoCliente { get; set; }
 

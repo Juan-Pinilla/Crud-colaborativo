@@ -8,7 +8,7 @@ namespace Crud_colaborativo.Models
         //public string Email { get; set; }
         public string Password { get; set; }
         
-        public int? ContratoId { get; set; }
+        public string? ContratoId { get; set; }
         public Contrato? Contrato { get; set; }
     }
 }

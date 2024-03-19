@@ -114,7 +114,6 @@ namespace Crud_colaborativo.Controllers
                 }
                 ModelState.AddModelError(nameof(email), "Password o Email Invalido");
             }
-            Console.WriteLine($"Error {ModelState.IsValid}");
             return View();
         }
 

@@ -70,7 +70,17 @@ using (var scope = app.Services.CreateScope())
 	var services = scope.ServiceProvider;
 	var context = services.GetRequiredService<ApplicationDbContext>();
 	//context.Database.Migrate();
-	DbInitializer.Initialize(context);
+	//DbInitializer.Initialize(context);
+	//try
+	//{
+	//	DbInitializer.SeedData.InitializeAsync(services).Wait();
+	//}
+	//catch (Exception ex)
+	//{
+	//	var logger = services.GetRequiredService<ILogger<Program>>();
+	//	logger.LogError(ex, "Error sedding the DB");
+	//	throw;
+	//}
 }	
 
 // Configure the HTTP request pipeline.

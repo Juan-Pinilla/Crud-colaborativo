@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Crud_colaborativo.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class ContratosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,7 +28,7 @@ namespace Crud_colaborativo.Controllers
         }
 
         // GET: Contratos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -93,7 +94,7 @@ namespace Crud_colaborativo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TipoCliente,Empresa,Referencia,EstadoContrato,FechaInicio,FechaFinalizacion,Socio,Gerente,Senior")] Contrato contrato)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,TipoCliente,Empresa,Referencia,EstadoContrato,FechaInicio,FechaFinalizacion,Socio,Gerente,Senior")] Contrato contrato)
         {
             if (id != contrato.Id)
             {
@@ -124,7 +125,7 @@ namespace Crud_colaborativo.Controllers
         }
 
         // GET: Contratos/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -156,7 +157,7 @@ namespace Crud_colaborativo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContratoExists(int id)
+        private bool ContratoExists(string id)
         {
             return _context.Contratos.Any(e => e.Id == id);
         }

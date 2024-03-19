@@ -24,11 +24,8 @@ namespace Crud_colaborativo.Migrations
 
             modelBuilder.Entity("Crud_colaborativo.Models.Contrato", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Empresa")
                         .HasColumnType("nvarchar(max)");
@@ -74,8 +71,8 @@ namespace Crud_colaborativo.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ContratoId")
-                        .HasColumnType("int");
+                    b.Property<string>("ContratoId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)

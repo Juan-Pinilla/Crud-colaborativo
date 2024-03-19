@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Crud_colaborativo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240313163428_InitialIdentity")]
-    partial class InitialIdentity
+    [Migration("20240319201054_InitialAfterMerge")]
+    partial class InitialAfterMerge
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,8 @@ namespace Crud_colaborativo.Migrations
 
             modelBuilder.Entity("Crud_colaborativo.Models.Contrato", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Empresa")
                         .HasColumnType("nvarchar(max)");
@@ -77,8 +74,8 @@ namespace Crud_colaborativo.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ContratoId")
-                        .HasColumnType("int");
+                    b.Property<string>("ContratoId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -280,9 +277,7 @@ namespace Crud_colaborativo.Migrations
                 {
                     b.HasOne("Crud_colaborativo.Models.Contrato", "Contrato")
                         .WithMany("Funcionarios")
-                        .HasForeignKey("ContratoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContratoId");
 
                     b.Navigation("Contrato");
                 });
