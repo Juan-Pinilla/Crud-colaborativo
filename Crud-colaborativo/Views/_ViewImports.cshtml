@@ -1,5 +1,9 @@
 ﻿@using Crud_colaborativo
 @using Crud_colaborativo.Models
-@using Microsoft.AspNetCore.Identity
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper Identity.CustomTagHelpers., Identity
+@using Microsoft.AspNetCore.Identity
+@addTagHelper Crud_colaborativo.CustomTagHelpers.*, Crud-colaborativo
+
+@inject SignInManager<Funcionario> _SignInManager
+@inject UserManager<Funcionario> _UserManager
+

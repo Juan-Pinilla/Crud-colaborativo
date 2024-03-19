@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Crud_colaborativo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 //	options.CheckConsentNeeded = context => true;
 //	options.MinimumSameSitePolicy = SameSiteMode.None;
 //});
+
+builder.Services.AddScoped<IUserServiceRepository, UserServiceRepository>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -32,7 +35,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-    options.AccessDeniedPath = "/Error";
+	options.AccessDeniedPath = "/Account/AccessDenied";
+	options.LoginPath = "/Auth/Login";
+	options.LogoutPath = "/Auth/Logout";
 });
 
 builder.Services.AddAuthorization(options =>
@@ -41,16 +46,20 @@ builder.Services.AddAuthorization(options =>
         policy => policy.RequireRole("Administrador"));
 });
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+	options.Password.RequireLowercase = false;
+	options.Password.RequireUppercase = false;
+	options.Password.RequiredLength = 4;
+	options.Password.RequireNonAlphanumeric = false;
+});
+
 
 //builder.Services.AddDefaultIdentity<Funcionario>(options => options.SignIn.RequireConfirmedAccount = true)
 //	.AddRoles<IdentityRole>()
 //	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
-
-
-
-
 
 builder.Services.AddMvc();
 

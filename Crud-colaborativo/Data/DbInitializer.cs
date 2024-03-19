@@ -8,7 +8,7 @@ namespace Crud_colaborativo.Data
         {
             
             var con1 = new Contrato { Empresa = "Contoso", EstadoContrato = EstadoContrato.Pendiente, FechaFinalizacion = DateTime.Now, FechaInicio = DateTime.Now, Socio = "Someone", Gerente = "Roberto", Senior = "Marcos" };
-            var user1 = new Funcionario { Email = "em@m.com", Nombre = "name1", Password = "password" };
+            var user1 = new Funcionario { Email = "em@m.com", Nombre = "name1" };
 
             if (!context.Contratos.Any())
             {

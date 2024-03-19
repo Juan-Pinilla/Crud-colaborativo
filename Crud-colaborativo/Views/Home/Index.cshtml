@@ -4,7 +4,11 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    Hello @User.Identity.Name !, Role @User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value
+    @if (_SignInManager.IsSignedIn(User))
+    {
+        <p>Hello @User.Identity.Name!, Role @User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value</p>
+    }
+    
     <a asp-action="logout" asp-controller="account">
         Logout
     </a>

@@ -1,10 +1,12 @@
 ﻿using Crud_colaborativo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Crud_colaborativo.Controllers
 {
+    [Authorize]
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;

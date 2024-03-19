@@ -13,6 +13,11 @@ namespace Crud_colaborativo.Controllers
             _userManager = usrMgr;
             _passwordHasher = passwordHasher;
         }
+        private void Errors(IdentityResult result)
+        {
+            foreach (IdentityError error in result.Errors)
+                ModelState.AddModelError("", error.Description);
+        }
 
         public IActionResult Index()
         {
@@ -46,6 +51,25 @@ namespace Crud_colaborativo.Controllers
                 }
             }
             return View(user);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            Funcionario user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                    Errors(result);
+
+            } else
+                ModelState.AddModelError("", "User Not Found");
+
+            return View("Index", _userManager.Users);
         }
     }
 }
