@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Crud_colaborativo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<Crud_colaborativoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Crud_colaborativoContext") ?? throw new InvalidOperationException("Connection string 'Crud_colaborativoContext' not found.")));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Crud_localAndres") ?? throw new InvalidOperationException("Connection string 'Crud_localAndres' not found.")));
 
 // Add services to the container.
 
@@ -73,17 +73,17 @@ using (var scope = app.Services.CreateScope())
 	var services = scope.ServiceProvider;
 	var context = services.GetRequiredService<ApplicationDbContext>();
 	//context.Database.Migrate();
-	//DbInitializer.Initialize(context);
-	//try
-	//{
-	//	DbInitializer.SeedData.InitializeAsync(services).Wait();
-	//}
-	//catch (Exception ex)
-	//{
-	//	var logger = services.GetRequiredService<ILogger<Program>>();
-	//	logger.LogError(ex, "Error sedding the DB");
-	//	throw;
-	//}
+	DbInitializer.Initialize(context);
+	try
+	{
+		DbInitializer.SeedData.InitializeAsync(services).Wait();
+	}
+	catch (Exception ex)
+	{
+		var logger = services.GetRequiredService<ILogger<Program>>();
+		logger.LogError(ex, "Error sedding the DB");
+		throw;
+	}
 }	
 
 // Configure the HTTP request pipeline.

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Crud_colaborativo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240319201054_InitialAfterMerge")]
-    partial class InitialAfterMerge
+    [Migration("20240319213535_InitialCreateAfterMerge")]
+    partial class InitialCreateAfterMerge
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,9 @@ namespace Crud_colaborativo.Migrations
                     b.Property<string>("Empresa")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EstadoContrato")
-                        .HasColumnType("int");
+                    b.Property<string>("EstadoContrato")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaFinalizacion")
                         .HasColumnType("datetime2");
@@ -43,6 +44,9 @@ namespace Crud_colaborativo.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Gerente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PropuestaContrato")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Referencia")
@@ -54,7 +58,16 @@ namespace Crud_colaborativo.Migrations
                     b.Property<string>("Socio")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SocioComercial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SocioParticipacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TipoCliente")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

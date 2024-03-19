@@ -30,8 +30,9 @@ namespace Crud_colaborativo.Migrations
                     b.Property<string>("Empresa")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EstadoContrato")
-                        .HasColumnType("int");
+                    b.Property<string>("EstadoContrato")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaFinalizacion")
                         .HasColumnType("datetime2");
@@ -45,13 +46,25 @@ namespace Crud_colaborativo.Migrations
                     b.Property<string>("PropuestaContrato")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Referencia")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Senior")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Socio")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SocioComercial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SocioParticipacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TipoCliente")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

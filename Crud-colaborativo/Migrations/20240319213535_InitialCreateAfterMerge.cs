@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Crud_colaborativo.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialAfterMerge : Migration
+    public partial class InitialCreateAfterMerge : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,15 +30,18 @@ namespace Crud_colaborativo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TipoCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TipoCliente = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Empresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Referencia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EstadoContrato = table.Column<int>(type: "int", nullable: false),
+                    EstadoContrato = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaFinalizacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Socio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gerente = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Senior = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Senior = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SocioParticipacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocioComercial = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropuestaContrato = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
