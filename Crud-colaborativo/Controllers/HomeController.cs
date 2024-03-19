@@ -1,9 +1,11 @@
 using Crud_colaborativo.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Crud_colaborativo.Controllers
 {
+	
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
@@ -18,7 +20,12 @@ namespace Crud_colaborativo.Controllers
 			return View();
 		}
 
-		public IActionResult Privacy()
+        public IActionResult Privacy()
+		{
+			return View();
+		}
+
+		public IActionResult AccessDenied()
 		{
 			return View();
 		}
