@@ -43,7 +43,7 @@ namespace Crud_colaborativo.Controllers
             if (ModelState.IsValid)
             {
                 var emailExists = await _userServiceRepository.EmailExists(funcionario.Email);
-                Console.WriteLine($"Error inside credint a new user {emailExists}");
+
                 if (emailExists)
                 {
                     ModelState.AddModelError("Error Creating the User", "Email Already Used");
