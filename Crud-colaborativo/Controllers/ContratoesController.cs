@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Crud_colaborativo.Data;
 using Crud_colaborativo.Models;
+using Firebase.Storage;
+
 
 namespace Crud_colaborativo.Controllers
 {
@@ -67,23 +69,35 @@ namespace Crud_colaborativo.Controllers
 
             if (ModelState.IsValid)
             {
-                if (propuestaContrato != null && propuestaContrato.Length > 0)
+                try
                 {
-                    // Generar un nombre de archivo único
-                    string nombreArchivo = Path.GetRandomFileName() + Path.GetExtension(propuestaContrato.FileName);
+                    string firebaseBucket = "almacenamiento-6efa5.appspot.com"; // URL base del bucket de Firebase Storage
 
-                    // Ruta donde se almacenará el archivo en el servidor (puedes cambiarla según tus necesidades)
-                    string rutaDestino = Path.Combine(_env.WebRootPath, "Multimedia", nombreArchivo);
-
-                    // Guardar el archivo en el servidor
-                    using (var stream = new FileStream(rutaDestino, FileMode.Create))
+                    // Configurar FirebaseStorage
+                    FirebaseStorage firebaseStorage = new FirebaseStorage(firebaseBucket, new FirebaseStorageOptions
                     {
-                        await propuestaContrato.CopyToAsync(stream);
+                        // Puedes agregar opciones adicionales aquí si es necesario
+                    });
+
+                    // Subir el archivo a Firebase Storage
+                    using (var stream = propuestaContrato.OpenReadStream())
+                    {
+                        // Especifica la carpeta y el nombre del archivo en Firebase Storage
+                        var task = await firebaseStorage
+                            .Child("Archivos") // Especifica la carpeta
+                            .Child(propuestaContrato.FileName) // Especifica el nombre del archivo
+                            .PutAsync(stream);
                     }
 
                     // Almacenar la ruta del archivo en la propiedad PropuestaContrato del modelo Contrato
-                    contrato.PropuestaContrato = "/Multimedia/" + nombreArchivo;
-                }  
+                    contrato.PropuestaContrato = propuestaContrato.FileName;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al subir archivo a Firebase Storage: {ex.Message}");
+                    ModelState.AddModelError("PropuestaContrato", $"Error al subir archivo a Firebase Storage: {ex.Message}");
+                    return View(contrato);
+                }
 
                 // Agregar el contrato a la base de datos    
                 _context.Add(contrato);
