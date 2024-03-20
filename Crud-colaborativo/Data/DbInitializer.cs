@@ -1,7 +1,6 @@
 ﻿using Crud_colaborativo.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace Crud_colaborativo.Data
 {
@@ -10,8 +9,8 @@ namespace Crud_colaborativo.Data
         public static void Initialize(ApplicationDbContext context)
         {
             
-            var con1 = new Contrato { Id = "RV001", Empresa = "Contoso", EstadoContrato = EstadoContrato.Pendiente, FechaFinalizacion = DateTime.Now, FechaInicio = DateTime.Now, Socio = "Someone", Gerente = "Roberto", Senior = "Marcos" };
-            var user1 = new Funcionario { NormalizedEmail = "T@M.COM", UserName = "t@m.com", Nombre = "andres", Password = "ewq321" };
+            var con1 = new Contrato { Id = "asd", Empresa = "Contoso", EstadoContrato = EstadoContrato.Pendiente, FechaFinalizacion = DateTime.Now, FechaInicio = DateTime.Now, Socio = "Someone", Gerente = "Roberto", Senior = "Marcos" };
+            //var user1 = new Funcionario { NormalizedEmail = "T@M.COM", UserName = "t@m.com", Nombre = "andres", Password = "ewq321" };
 
             if (!context.Contratos.Any())
             {
@@ -22,14 +21,14 @@ namespace Crud_colaborativo.Data
                 context.Contratos.AddRange(contratos);
             }
 
-            if (!context.Funcionarios.Any())
-            {
-                var funcionarios = new Funcionario[]
-                {
-                    user1
-                };
-                context.Funcionarios.AddRange(funcionarios);
-            }
+            //if (!context.Funcionarios.Any())
+            //{
+            //    var funcionarios = new Funcionario[]
+            //    {
+            //        user1
+            //    };
+            //    context.Funcionarios.AddRange(funcionarios);
+            //}
 
             context.SaveChanges();
 

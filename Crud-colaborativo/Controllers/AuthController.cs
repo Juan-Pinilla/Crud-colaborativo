@@ -40,31 +40,6 @@ namespace Crud_colaborativo.Controllers
         [HttpPost]
         public async Task<IActionResult> Signup(Funcionario funcionario)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    Funcionario usuario = new Funcionario
-            //    {
-            //        NormalizedEmail = funcionario.Email,
-            //        Nombre = funcionario.Nombre,
-            //        UserName = funcionario.Nombre,
-            //        Email = funcionario.Email,
-            //        Password = funcionario.Password
-            //    };
-
-            //    IdentityResult result = await _userManager.CreateAsync(usuario);
-
-            //    if (result.Succeeded)
-            //    {
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    else
-            //        foreach (IdentityError error in result.Errors)
-            //            ModelState.AddModelError(string.Empty, error.Description);
-            //}
-            //else
-            //    _logger.LogError("Error Here", "Error inside auth");
-
-            //return View(funcionario);
             if (ModelState.IsValid)
             {
                 var emailExists = await _userServiceRepository.EmailExists(funcionario.Email);
@@ -81,7 +56,6 @@ namespace Crud_colaborativo.Controllers
                     Password = funcionario.Password,
                 };
                 var result = await _userManager.CreateAsync(user, user.Password);
-                //var result = await _userServiceRepository.CreateUser(user);
 
                 if (result.Succeeded)
                 {
@@ -104,7 +78,6 @@ namespace Crud_colaborativo.Controllers
                 if (user != null)
                 {
                     await _signInManager.SignOutAsync();
-                    var pass = await _userManager.CheckPasswordAsync(user, password);
 
                     Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, password, false, false);
 
@@ -117,35 +90,6 @@ namespace Crud_colaborativo.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[Route("Signup")]
-        //public IActionResult Login(string userName, string password)
-        //{
-        //    if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-        //    {
-        //        return RedirectToAction("Login");
-        //    }
-
-        //    ClaimsIdentity identity = null;
-        //    bool isAuthenticated = false;
-
-        //    if (userName == "admin" && password == "pass")
-        //    {
-        //        identity = new ClaimsIdentity(new[]
-        //        {
-        //            new Claim(ClaimTypes.Name, userName),
-        //            new Claim(ClaimTypes.Role, "Admin")
-        //        }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-        //        isAuthenticated = true;
-
-        //        //var principal = new ClaimsPrincipal(identity);
-
-        //        //var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-        //        //return RedirectToAction("Index", "Home");
-        //    }
-
         //    if (userName == "user" && password == "pass")
         //    {
         //        identity = new ClaimsIdentity(new[]
@@ -154,23 +98,11 @@ namespace Crud_colaborativo.Controllers
         //            new Claim(ClaimTypes.Role, "User")
         //        }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        //        isAuthenticated = true;
-        //    }
-
-        //    if (isAuthenticated)
-        //    {
-        //        var principal = new ClaimsPrincipal(identity);
-        //        var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-        //        return RedirectToAction("index", "Home");
-        //    }
-
-        //    return View();
-        //}
 
         [HttpPost]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
     }
