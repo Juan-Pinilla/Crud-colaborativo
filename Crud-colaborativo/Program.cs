@@ -16,12 +16,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Add services to the container.
 
-//builder.Services.Configure<CookiePolicyOptions>(options =>
-//{
-//	options.CheckConsentNeeded = context => true;
-//	options.MinimumSameSitePolicy = SameSiteMode.None;
-//});
-
 builder.Services.AddScoped<IUserServiceRepository, UserServiceRepository>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -56,11 +50,6 @@ builder.Services.Configure<IdentityOptions>(options =>
 	options.Password.RequiredLength = 4;
 	options.Password.RequireNonAlphanumeric = false;
 });
-
-
-//builder.Services.AddDefaultIdentity<Funcionario>(options => options.SignIn.RequireConfirmedAccount = true)
-//	.AddRoles<IdentityRole>()
-//	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 

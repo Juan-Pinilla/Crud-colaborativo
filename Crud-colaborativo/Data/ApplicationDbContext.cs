@@ -9,6 +9,5 @@ namespace Crud_colaborativo.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Contrato> Contratos { get; set; }
-		public DbSet<Funcionario> Funcionarios { get; set; }
     }
 }
