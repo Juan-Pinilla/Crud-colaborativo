@@ -14,7 +14,7 @@ namespace Crud_colaborativo.Models
         [Required(ErrorMessage = "El campo Empresa es requerido.")]
         public string? Empresa { get; set; }
 
-        [Required(ErrorMessage = "El campo Referencia es requerido.")]
+        
         public string? Referencia { get; set; }
 
         [Required(ErrorMessage = "El campo Estado Contrato es requerido.")]

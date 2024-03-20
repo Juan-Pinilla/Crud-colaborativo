@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Dropbox.Api;
 using System.Net;
 using Dropbox.Api.Files;
+using Firebase.Storage;
 
 namespace Crud_colaborativo.Controllers
 {
@@ -77,15 +78,22 @@ namespace Crud_colaborativo.Controllers
             {
                 try
                 {
-                    string accessToken = "uat.AE0brfdwzTX3Dw_R4S7PfCkh8y6Tk7vuv6hcmZ7ZJcpeJikGXAwetiUQfczIbcgZQic6SQktMgTQNmwamwjCPO0SnWrP29rpsLXAcW7HLYe4vG138b0Vu1BHhtm9pIQ7NDIdU_07zFUxAL_WWMQOJ4l5CrqLDQsxbbi7uGH55hUX25NrUG884hrWMau2nG04ory4GiMN3N5X_DnPP1MeKaH6Nd0K07HBT9pA-LlxEZyAE10-JmYjZJgBal-tMR95v307ESwOyS_68iTZXnJZJtveFYRdou20oL0_M0dMIuKq54q-NM5h6a_OSesu0F7P7sXB_Vwz4Tg8ivwpBt7AcW8TYuKdEwri57ED4PBki_PQkbc4eydzWJYc9B7WT4WVT7L58PNH_9hw0jOY_FtiAg97sn9I0C_O9_uNliCKJ_SPd35DTDosiSyw22mYEve-Xzes9ZuRnMyWpCzytNt89RDE61YZ00etbV_2PLa6AN4COfel4NOVIxCvqimCzWKU6oQlvSthwjEe1LzrN8e68PxUOv9v-mA_QGY9q9ijeUdet03kVb6shKW9Du9zjwHvD41YQmr6frGCgA21i9YNVgaN21_g3ouJYFz51uQ9V2mJsEPqrKmz2UuEWBZ-8ifHhIGDyDq5WrkBsoMBJfgJdieT8Id6FDPuGc_WEMMb9rl6pRW-85xC7NdFnlW58lxQa4WGA-6F7HzPztJEmHYyD5MXvgpblwrm9ydV4diwQCLbR42uipljc-Im3DhmQaFx_yuAv5_Eyc0xYsngC71qG8L11wXSFMWmmnFcBQrnp9AwgbJoe2vP0XCHpLqkFOISeuvnXP-JOlv_0NQ9maaqGtJnNuuaOAaUJp5e-gewHKF9bEfrNuS4sr5mSMzhOX_XPqqdU_Gs1SWZM_MD2JpaMF4vVBEBxAOhT9aRx0E9Ce_I6ESqJZBrDF8eDOxY38cw4NdvbAluntdLNfFm4APa-MpbpRLCFqoCWXIr-3Et8_aCOdBaD673k6IMDEcRmRL0JXXT-evt6r49hISUpFMjb8Cb-xQHS5MxKr7PYr2wSVMdC-BGK87Vku94o2J56tdJ8HNgDtZ16yDRgnhiOjnH3nOMu3hxvDsd2-w4exikRMsk8l0928Zh47bISqF64HxFANJ3iufPMBU_JmagwE8falnEbaT_oZqIXtOnQW9hrXbYmAz3PvnuLZspDgjWLxTbTKeWOIS0PuLfp7U2pRzwrzpOnEco_BYeXfXDj7Uzu9kPBrL01kXHaxfU18_anSNTnH-BOM1tay60qbfG1RTmMAq4_xSzki33H4ThkgH4zqtxrppsAjCKaVwh3LSxPaO5ptZINA2r_pGrq7Gc29Hho75Fds3PaD1TMH-YdjrOWtrXS66BJ_0kykkIIssfKd1pK5Cwgh-7uQJHf4cbkEQB4vQIqJD-74P4IXr7KQ6WTRMdq2dB_XNXBULDita2xVdKVhFzB6m7IdvjQwHD5iwm5YeB"; // Reemplaza esto con tu propio access token de Dropbox
+                    string firebaseBucket = "almacenamiento-6efa5.appspot.com"; // URL base del bucket de Firebase Storage
 
-                    using (var client = new DropboxClient(accessToken))
+                    // Configurar FirebaseStorage
+                    FirebaseStorage firebaseStorage = new FirebaseStorage(firebaseBucket, new FirebaseStorageOptions
                     {
-                        // Sube el archivo directamente a Dropbox
-                        using (var stream = propuestaContrato.OpenReadStream())
-                        {
-                            await client.Files.UploadAsync("/Imagenes/" + propuestaContrato.FileName, WriteMode.Overwrite.Instance, body: stream);
-                        }
+                        // Puedes agregar opciones adicionales aquí si es necesario
+                    });
+
+                    // Subir el archivo a Firebase Storage
+                    using (var stream = propuestaContrato.OpenReadStream())
+                    {
+                        // Especifica la carpeta y el nombre del archivo en Firebase Storage
+                        var task = await firebaseStorage
+                            .Child("Archivos") // Especifica la carpeta
+                            .Child(propuestaContrato.FileName) // Especifica el nombre del archivo
+                            .PutAsync(stream);
                     }
 
                     // Almacenar la ruta del archivo en la propiedad PropuestaContrato del modelo Contrato
@@ -93,8 +101,8 @@ namespace Crud_colaborativo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error al subir archivo a Dropbox: {ex.Message}");
-                    ModelState.AddModelError("PropuestaContrato", $"Error al subir archivo a Dropbox: {ex.Message}");
+                    Console.WriteLine($"Error al subir archivo a Firebase Storage: {ex.Message}");
+                    ModelState.AddModelError("PropuestaContrato", $"Error al subir archivo a Firebase Storage: {ex.Message}");
                     return View(contrato);
                 }
 
@@ -107,6 +115,7 @@ namespace Crud_colaborativo.Controllers
 
             return View(contrato);
         }
+
 
 
         [HttpGet]
