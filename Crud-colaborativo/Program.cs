@@ -11,9 +11,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Crud_colaborativo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Crud_localAndres") ?? throw new InvalidOperationException("Connection string 'Crud_localAndres' not found.")));
-
 // Add services to the container.
 
 builder.Services.AddScoped<IUserServiceRepository, UserServiceRepository>();
