@@ -1,0 +1,14 @@
+            - name: Labeler
+  uses: actions/labeler@v5.0.0
+  with:
+    # The GitHub token used to manage labels
+    repo-token: # optional, default is ${{ github.token }}
+    # The path for the label configurations
+    configuration-path: # optional, default is .github/labeler.yml
+    # Whether or not to remove labels when matching files are reverted
+    sync-labels: # optional
+    # Whether or not to auto-include paths starting with dot (e.g. `.github`)
+    dot: # optional, default is true
+    # The pull request number(s)
+    pr-number: # optional
+          
