@@ -12,7 +12,6 @@ namespace Crud_colaborativo.Models
     public class Contrato
     {
         [Key]
-        [Required(ErrorMessage = "El campo IdContrato es requerido.")]
         public string Id { get; set; }
 
         [Required(ErrorMessage = "El campo Tipo Cliente es requerido.")]

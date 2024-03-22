@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Crud_colaborativo.Controllers
 {
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager, Admin")]
     public class ContratosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -74,7 +74,7 @@ namespace Crud_colaborativo.Controllers
 
         [Authorize(Policy = "RequireAdministrador")]
         // GET: Contratos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -145,7 +145,7 @@ namespace Crud_colaborativo.Controllers
         // POST: Contratos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var contrato = await _context.Contratos.FindAsync(id);
             if (contrato != null)

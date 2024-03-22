@@ -11,16 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Crud_colaborativo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Crud_localAndres") ?? throw new InvalidOperationException("Connection string 'Crud_localAndres' not found.")));
-
 // Add services to the container.
-
-//builder.Services.Configure<CookiePolicyOptions>(options =>
-//{
-//	options.CheckConsentNeeded = context => true;
-//	options.MinimumSameSitePolicy = SameSiteMode.None;
-//});
 
 builder.Services.AddScoped<IUserServiceRepository, UserServiceRepository>();
 
@@ -56,11 +47,6 @@ builder.Services.Configure<IdentityOptions>(options =>
 	options.Password.RequiredLength = 4;
 	options.Password.RequireNonAlphanumeric = false;
 });
-
-
-//builder.Services.AddDefaultIdentity<Funcionario>(options => options.SignIn.RequireConfirmedAccount = true)
-//	.AddRoles<IdentityRole>()
-//	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
